@@ -23,9 +23,9 @@ namespace CustomerWeb.Controllers
 
         public async Task<IActionResult> Index()
         {
-            //var result=_service.GetCustomerList();
-            var res = await _service.AddCustomer();
-            return View();
+            var result=_service.GetCustomerList();
+            //var res = await _service.AddCustomer();
+            return View(result);
         }
 
         public IActionResult Privacy()
