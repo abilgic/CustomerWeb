@@ -23,15 +23,17 @@ namespace CustomerWeb.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var result=_service.GetCustomerList();
+            var result=await _service.GetCustomerList();
             //var res = await _service.AddCustomer();
             return View(result);
         }
-
-        public IActionResult Privacy()
+        public async Task<IActionResult> CustomerDesc(int Id)
         {
-            return View();
+            var result = await _service.GetCustomerList();
+            //var res = await _service.AddCustomer();
+            return View(result);
         }
+       
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

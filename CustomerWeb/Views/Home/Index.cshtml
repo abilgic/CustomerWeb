@@ -1,39 +1,80 @@
-﻿@Model IEnumerable<Customer> 
+﻿@model List<CustomerWeb.Models.DB.Customer>
 @{
     ViewData["Title"] = "Home Page";
 }
-     
+
 <div class="container">
     <div class="btn-group">
-        <button type="button" class="btn btn-primary">Yeni Kayıt</button>
-        <button type="button" class="btn btn-primary">Aç</button>
+        <a asp-controller="Home" asp-action="CustomerDesc" type="button" class="btn btn-primary">
+            Yeni Kayıt
+        </a>
+        <button type="button" class="btn btn-primary" id="btnOpen">Aç</button>
         <button type="button" class="btn btn-primary">Sil</button>
+        <input type="hidden" id="custId" name="custId" >
     </div>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Adı</th>
-                <th>Vergi Numarası</th>
-                <th>Kuruluş Tarihi</th>
-                <th>Telefon Numarası</th>
-                <th>Adresi</th>
-                <th>İl</th>
-                <th>İlçe</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+    <div class="panel panel-default">
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>@item.</td>
-                    <td>Doe</td>
-                    <td>john@example.com</td>
+                    <th>No</th>
+                    <th>Adı</th>
+                    <th>Vergi Numarası</th>
+                    <th>Kuruluş Tarihi</th>
+                    <th>Telefon Numarası</th>
+                    <th>Adresi</th>
+                    <th>İl</th>
+                    <th>İlçe</th>
                 </tr>
-
-            }
-
-</table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.TaxId</td>
+                    <td>@item.CreateDate</td>
+                    <td>@item.PhoneNumber</td>
+                    <td>@item.Address</td>
+                    <td>@item.City</td>
+                    <td>@item.Town</td>
+                </tr>
+                }
+        </table>
+    </div>
 </div>
+<style>
+    table tbody tr:hover {
+        background-color: orange;
+        cursor: pointer;
+    }
+    table tr.selected {
+        background-color: #e92929 !important;
+        color: #fff;
+        vertical-align: middle;
+        padding: 1.5em;
+    }
+</style>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('table tbody tr').click(function () {
+                $('.selected').removeClass('selected');
+                $(this).addClass("selected");
+                //alert($(this).text());
+                var currentRow = $(this).closest("tr");
+
+                var col1 = currentRow.find("td:eq(0)").text();
+                alert("col1***" + col1);
+                $("#custId").val(col1);
+
+            });
+
+            $("#btnOpen").click(function () {
+                window.location.href = "/Home/CustomerDesc?Id=" + $("#custId").val();
+                alert("custId---" + $("#custId").val());
+            });
+        });
+    </script>
+
+} 
