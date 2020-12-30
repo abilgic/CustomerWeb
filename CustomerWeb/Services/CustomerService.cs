@@ -54,5 +54,14 @@ namespace CustomerWeb.Services
                                .ToListAsync();
             return CustomerList;
         }
+
+        public async Task<List<Customer>> GetCustomerDetail(int Id)
+        {
+
+            var Customers = await  _context.Customers
+                               .FromSqlRaw("SpGetCustomerDetail {0}",Id).ToListAsync();
+           
+            return Customers;
+        }
     }
 }

@@ -10,6 +10,7 @@ namespace CustomerWeb.Services
     public interface ICustomerService
     {
         Task<List<Customer>> GetCustomerList();
+        Task<List<Customer>> GetCustomerDetail(int Id);
         Task<int> AddCustomer();
     }
 }

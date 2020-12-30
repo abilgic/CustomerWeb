@@ -29,9 +29,9 @@ namespace CustomerWeb.Controllers
         }
         public async Task<IActionResult> CustomerDesc(int Id)
         {
-            var result = await _service.GetCustomerList();
+            var result = await _service.GetCustomerDetail(Id);
             //var res = await _service.AddCustomer();
-            return View(result);
+            return View(result.FirstOrDefault());
         }
        
 
