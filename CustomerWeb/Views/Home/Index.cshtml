@@ -9,7 +9,7 @@
             Yeni Kayıt
         </a>
         <button type="button" class="btn btn-primary" id="btnOpen">Aç</button>
-        <button type="button" class="btn btn-primary">Sil</button>
+        <button type="button" class="btn btn-primary" id="btnDelete">Sil</button>
         <input type="hidden" id="custId" name="custId" >
     </div>
     <div class="panel panel-default">
@@ -55,26 +55,53 @@
         padding: 1.5em;
     }
 </style>
+
 @section scripts{
     <script>
         $(document).ready(function () {
             $('table tbody tr').click(function () {
                 $('.selected').removeClass('selected');
                 $(this).addClass("selected");
-                //alert($(this).text());
+                
                 var currentRow = $(this).closest("tr");
 
                 var col1 = currentRow.find("td:eq(0)").text();
-                alert("col1***" + col1);
+              
                 $("#custId").val(col1);
 
             });
 
             $("#btnOpen").click(function () {
-                window.location.href = "/Home/CustomerDesc?Id=" + $("#custId").val();
-                alert("custId---" + $("#custId").val());
+               
+                if ($("#custId").val().length>0) {
+                    window.location.href = "/Home/CustomerDesc?Id=" + $("#custId").val();
+                }
+                else {
+                    alert("Lütfen Seçim yapın");
+                }
+              
             });
-        });
+
+            $("#btnDelete").click(function () {
+                $.ajax({
+                    url: "/Home/DeleteCustomer",
+                    dataType: 'json',
+                    type: 'POST',
+                    data: { Id: $("#custId").val()},
+                }).done(function (result) {
+                    if (result) {
+                        alert("Kayıt Silindi");
+                        window.location.reload();
+                    }
+                    else {
+                        alert("Kayıt silinemedi");
+                    }
+                        1
+                });//Ajax method                
+
+            });
+
+        });//document ready 
     </script>
 
 } 

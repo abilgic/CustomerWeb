@@ -17,25 +17,14 @@ namespace CustomerWeb.Services
             _context = context;
         }         
 
-        public async Task<int> AddCustomer()
+        public async Task<int> AddCustomer(Customer Customer)
         {
             var rowsAffected = 0;
             try
             {
-
                 using (_context)
                 {
-                    var Name = "Ali";
-                    var TaxId = 222222;
-                    var CreateDate = DateTime.Now;
-                    var PhoneNumber = "9999999";
-                    var Address = "İzmir Karşıyaka";
-                    var City = "İzmir";
-                    var Town = "Karşıyaka";
-
-                    rowsAffected = await _context.Database.ExecuteSqlInterpolatedAsync($"EXEC SpAddCustomer @Name={Name}, @TaxId={TaxId}, @CreateDate={CreateDate}, @PhoneNumber={PhoneNumber}, @Address={Address}, @City={City}, @Town={Town}");
-
-                  
+                    rowsAffected = await _context.Database.ExecuteSqlInterpolatedAsync($"EXEC SpAddCustomer @Name={Customer.Name}, @TaxId={Customer.TaxId}, @CreateDate={Customer.CreateDate}, @PhoneNumber={Customer.PhoneNumber}, @Address={Customer.Address}, @City={Customer.City}, @Town={Customer.Town}");                  
                 }
             } catch(Exception e)
             { 
@@ -45,10 +34,50 @@ namespace CustomerWeb.Services
             return rowsAffected;
         }
 
+        public async Task<int> UpdateCustomer(Customer Customer)
+        {
+            var rowsAffected = 0;
+            try
+            {
+
+                using (_context)
+                {
+                    rowsAffected = await _context.Database.ExecuteSqlInterpolatedAsync($"EXEC SpUpdateCustomer @Id={Customer.Id}, @Name={Customer.Name}, @TaxId={Customer.TaxId}, @CreateDate={Customer.CreateDate}, @PhoneNumber={Customer.PhoneNumber}, @Address={Customer.Address}, @City={Customer.City}, @Town={Customer.Town}");
+
+
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return rowsAffected;
+        }
+
+        public async Task<int> DeleteCustomer(int Id)
+        {
+            var rowsAffected = 0;
+            try
+            {
+                using (_context)
+                {                          
+
+                    rowsAffected = await _context.Database.ExecuteSqlInterpolatedAsync($"EXEC SpDeleteCustomer @Id={Id}");
+
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return rowsAffected;
+        }
+
+
         public async Task<List<Customer>> GetCustomerList()
         {
-           
-
             var CustomerList = await  _context.Customers
                                .FromSqlRaw("SpGetCustomers")
                                .ToListAsync();

@@ -11,6 +11,8 @@ namespace CustomerWeb.Services
     {
         Task<List<Customer>> GetCustomerList();
         Task<List<Customer>> GetCustomerDetail(int Id);
-        Task<int> AddCustomer();
+        Task<int> AddCustomer(Customer Customer);
+        Task<int> UpdateCustomer(Customer Customer);
+        Task<int> DeleteCustomer(int Id);
     }
 }

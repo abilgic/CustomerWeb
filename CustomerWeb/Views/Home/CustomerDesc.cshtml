@@ -1,55 +1,73 @@
 ﻿@model CustomerWeb.Models.DB.Customer
+
+@{ 
+    var Type = ViewData["Type"];
+    }
+
 <div class="container">
+    
+    @using (Html.BeginForm("CustomerDesc", "Home", FormMethod.Post, new { Type = Type }))
+    {
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="btn-group">
-        <a asp-controller="Home" asp-action="CustomerDesc" type="button" class="btn btn-primary">
-            Yeni Kayıt
+        <a asp-controller="Home" asp-action="Index" type="button" class="btn btn-primary">
+            Geri Dön
         </a>
-        <button type="button" class="btn btn-primary" id="btnOpen">Aç</button>
-        <button type="button" class="btn btn-primary">Sil</button>
-        <input type="hidden" id="custId" name="custId">
+        <input type="hidden" name="TypeValue" value="@ViewData["Type"]" />
+        <input type="hidden" name="Id" value="@ViewData["custId"]" />
+        <input type="submit" class="btn btn-primary" value="Kaydet" />
     </div>
-    <div class="panel panel-default">
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Adı</label>
-            <div class="col-sm-6">
-                <input type="text" name="Name" value="@Model.Name" class="form-control" />
+        <div class="panel panel-default">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Adı</label>
+                <div class="col-sm-6">
+                    <input asp-for="Name" class="form-control" required/>
+                    @*<input type="text" name="Name" value="@Model.Name" class="form-control" />*@
+                </div>
             </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Vergi No</label>
-            <div class="col-sm-6">
-                <input type="text" name="TaxId" value="@Model.TaxId" class="form-control" />
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Vergi No</label>
+                <div class="col-sm-6">
+                    <input asp-for="TaxId" class="form-control" required/>
+                    @*<input type="text" name="TaxId" value="@Model.TaxId" class="form-control" />*@
+                </div>
             </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Adı</label>
-            <div class="col-sm-6">
-                <input type="text" name="CreateDate" value="@Model.CreateDate" class="form-control" />
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Adı</label>
+                <div class="col-sm-6">
+                    <input asp-for="CreateDate" class="form-control" required/>
+                    @*<input type="text" name="CreateDate" value="@Model.CreateDate" class="form-control" />*@
+                </div>
             </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Telefon</label>
-            <div class="col-sm-6">
-                <input type="text" name="PhoneNumber" value="@Model.PhoneNumber" class="form-control" />
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Telefon</label>
+                <div class="col-sm-6">
+                    <input asp-for="PhoneNumber" class="form-control" required/>
+                    @*<input type="text" name="PhoneNumber" value="@Model.PhoneNumber" class="form-control" />*@
+                </div>
             </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label">Adres</label>
-            <div class="col-sm-6">
-                <input type="text" name="Address" value="@Model.Address" class="form-control" />
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">Adres</label>
+                <div class="col-sm-6">
+                    <input asp-for="Address" class="form-control" required/>
+                    @*<input type="text" name="Address" value="@Model.Address" class="form-control" />*@
+                </div>
             </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label">İl</label>
-            <div class="col-sm-6">
-                <input type="text" name="City" value="@Model.City" class="form-control" />
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">İl</label>
+                <div class="col-sm-6">
+                    <input asp-for="City" class="form-control" required/>
+                    @*<input type="text" name="City" value="@Model.City" class="form-control" />*@
+                </div>
             </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label">İlçe</label>
-            <div class="col-sm-6">
-                <input type="text" name="Town" value="@Model.Town" class="form-control" />
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">İlçe</label>
+                <div class="col-sm-6">
+                    <input asp-for="Town" class="form-control" required/>
+                    @*<input type="text" name="Town" value="@Model.Town" class="form-control" />*@
+                </div>
             </div>
+
         </div>
-    </div>
+    }
 </div>
