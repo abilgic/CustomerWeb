@@ -25,7 +25,7 @@ namespace CustomerWeb.Controllers
         public async Task<IActionResult> Index()
         {
             var result=await _service.GetCustomerList();
-            //var res = await _service.AddCustomer();
+           
             return View(result);
         }
 
@@ -39,24 +39,31 @@ namespace CustomerWeb.Controllers
         [HttpGet]
         public async Task<IActionResult> CustomerDesc(int Id)
         {
+            var model = new GetModel();
+
             @ViewData["custId"] = Id;
 
             if (Id == 0)
             {
                 ViewData["Type"] = Enums.TypeVal.Insert.ToString();
-                return View();
+                return View(model);
             }
             else { 
                 var result = await _service.GetCustomerDetail(Id);
+                model.Customer = result.FirstOrDefault();
+                model.Visitings = await _service.GetVisitList(Id);
                 
                 ViewData["Type"] = Enums.TypeVal.Update.ToString();
-                return View(result.FirstOrDefault());
-        }
+
+                return View(model);
+            }
+
         }
 
         [HttpPost]
         public async Task<IActionResult> CustomerDesc(string TypeValue, Customer Customer)
-        {   
+        {         
+
             if (ModelState.IsValid)
             {
                 if (TypeValue == Enums.TypeVal.Insert.ToString())
@@ -73,6 +80,42 @@ namespace CustomerWeb.Controllers
 
             return View(Customer);
           
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetVisitingDetail(int Id)
+        {
+            var result = await _service.GetVisitDetail(Id);
+            return Json(result.FirstOrDefault());
+        }
+        [HttpGet]
+        public async Task<JsonResult> GetVisitings(int CustomerId)
+        {
+            var result = await _service.GetVisitDetail(CustomerId);
+            return Json(result.FirstOrDefault());
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> AddVisiting(Visiting Visiting)
+        {
+            int result = 0;
+            if (Visiting.Id > 0)
+            {
+                 result = await _service.UpdateVisit(Visiting);
+            }
+            else if (Visiting.Id == 0)
+            {
+                 result = await _service.AddVisit(Visiting);
+
+            }
+                return Json(result);
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> DeleteVisiting(int Id)
+        {
+            var result = await _service.DeleteVisit(Id);
+            return Json(result);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

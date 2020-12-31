@@ -76,7 +76,6 @@ C:\Users\Ahmet Bilgiç\source\repos\CustomerWeb\CustomerWeb\obj\Debug\netcoreapp
 C:\Users\Ahmet Bilgiç\source\repos\CustomerWeb\CustomerWeb\obj\Debug\netcoreapp3.1\CustomerWeb.dll
 C:\Users\Ahmet Bilgiç\source\repos\CustomerWeb\CustomerWeb\obj\Debug\netcoreapp3.1\CustomerWeb.pdb
 C:\Users\Ahmet Bilgiç\source\repos\CustomerWeb\CustomerWeb\obj\Debug\netcoreapp3.1\CustomerWeb.genruntimeconfig.cache
-C:\Users\Ahmet Bilgiç\source\repos\CustomerWeb\CustomerWeb\obj\Debug\netcoreapp3.1\CustomerWeb.csprojAssemblyReference.cache
 C:\Users\Ahmet Bilgiç\source\repos\CustomerWeb\CustomerWeb\obj\Debug\netcoreapp3.1\Razor\Views\Home\CustomerDesc.cshtml.g.cs
 C:\Users\Ahmet Bilgiç\source\repos\CustomerWeb\CustomerWeb\bin\Debug\netcoreapp3.1\refs\Microsoft.AspNetCore.Antiforgery.dll
 C:\Users\Ahmet Bilgiç\source\repos\CustomerWeb\CustomerWeb\bin\Debug\netcoreapp3.1\refs\Microsoft.AspNetCore.Authentication.Abstractions.dll

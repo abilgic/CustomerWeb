@@ -18,8 +18,7 @@ namespace CustomerWeb.Models.DB
         }
 
         public virtual DbSet<Customer> Customers { get; set; }
-
-        
+        public virtual DbSet<Visiting> Visitings { get; set; }       
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -38,6 +37,13 @@ namespace CustomerWeb.Models.DB
                 entity.Property(e => e.PhoneNumber).HasMaxLength(13);
 
                 entity.Property(e => e.Town).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<Visiting>(entity =>
+            {
+                entity.ToTable("Visiting");
+
+                entity.Property(e => e.Description).HasMaxLength(500);
             });
 
             OnModelCreatingPartial(modelBuilder);

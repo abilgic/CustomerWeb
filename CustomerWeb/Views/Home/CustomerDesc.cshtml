@@ -1,73 +1,253 @@
-﻿@model CustomerWeb.Models.DB.Customer
+﻿@model GetModel
 
-@{ 
-    var Type = ViewData["Type"];
-    }
 
 <div class="container">
-    
-    @using (Html.BeginForm("CustomerDesc", "Home", FormMethod.Post, new { Type = Type }))
+
+    @using (Html.BeginForm("CustomerDesc", "Home", FormMethod.Post))
     {
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="btn-group">
         <a asp-controller="Home" asp-action="Index" type="button" class="btn btn-primary">
             Geri Dön
         </a>
+        <input type="hidden" name="Customer.Id" value="@ViewData["custId"]" />
         <input type="hidden" name="TypeValue" value="@ViewData["Type"]" />
-        <input type="hidden" name="Id" value="@ViewData["custId"]" />
         <input type="submit" class="btn btn-primary" value="Kaydet" />
     </div>
         <div class="panel panel-default">
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Adı</label>
                 <div class="col-sm-6">
-                    <input asp-for="Name" class="form-control" required/>
-                    @*<input type="text" name="Name" value="@Model.Name" class="form-control" />*@
+                    <input asp-for="Customer.Name" class="form-control" required />
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Vergi No</label>
                 <div class="col-sm-6">
-                    <input asp-for="TaxId" class="form-control" required/>
-                    @*<input type="text" name="TaxId" value="@Model.TaxId" class="form-control" />*@
+                    <input asp-for="Customer.TaxId" class="form-control" required />
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label">Adı</label>
+                <label class="col-sm-2 col-form-label">Kuruluş Tarihi</label>
                 <div class="col-sm-6">
-                    <input asp-for="CreateDate" class="form-control" required/>
-                    @*<input type="text" name="CreateDate" value="@Model.CreateDate" class="form-control" />*@
+                    <input asp-for="Customer.CreateDate" class="form-control" required />
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Telefon</label>
                 <div class="col-sm-6">
-                    <input asp-for="PhoneNumber" class="form-control" required/>
-                    @*<input type="text" name="PhoneNumber" value="@Model.PhoneNumber" class="form-control" />*@
+                    <input asp-for="Customer.PhoneNumber" class="form-control" required />
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Adres</label>
                 <div class="col-sm-6">
-                    <input asp-for="Address" class="form-control" required/>
-                    @*<input type="text" name="Address" value="@Model.Address" class="form-control" />*@
+                    <input asp-for="Customer.Address" class="form-control" required />
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">İl</label>
                 <div class="col-sm-6">
-                    <input asp-for="City" class="form-control" required/>
-                    @*<input type="text" name="City" value="@Model.City" class="form-control" />*@
+                    <input asp-for="Customer.City" class="form-control" required />
                 </div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">İlçe</label>
                 <div class="col-sm-6">
-                    <input asp-for="Town" class="form-control" required/>
-                    @*<input type="text" name="Town" value="@Model.Town" class="form-control" />*@
+                    <input asp-for="Customer.Town" class="form-control" required />
                 </div>
             </div>
-
         </div>
     }
+
+    <div class="panel panel-default">
+        <button type="button" id="btnNewVisit" class="btn btn-primary" data-toggle="modal" data-target="#visitModal">Yeni Ziyaret</button>
+
+        <table class="table" id="tblVisitings">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Ziyaret Tarihi</th>
+                    <th>Açıklama</th>
+                    <th>Email ile Bildir</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if(Model.Visitings!=null)
+                {
+                    foreach (var item in Model.Visitings)
+                    {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.VisitDate</td>
+                        <td>@item.Description</td>
+                        <td>@item.NotifyByEmail</td>
+                    </tr>
+                }
+                }
+                </tbody>
+</table>
+    </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="visitModal" tabindex="-1" aria-labelledby="visitModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="visitModalLabel">Ziyaretler</h5>
+                <button type="button"  class="close clearFields" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="VisitForm">
+                    <input type="hidden" id="VisitSaveType"/>
+                    <input type="hidden" id="hdnVisitId" />
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Ziyaret Tarihi</label>
+                        <div class="col-sm-6">
+                            <input type="text" name="VisitDate" class="form-control" required />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Açıklama</label>
+                        <div class="col-sm-6">
+                            <input name="Description" class="form-control" required />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <div class="checkbox checkbox-left-label">
+                                <label>Email ile bildir <input type="checkbox" name="NotifyByEmail" value=""></label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary" id="btnAddVisit">Kaydet</button>
+                    <button type="button" class="btn btn-primary" id="btnDeleteVisit">Sil</button>
+                    <button type="button" class="btn btn-primary clearFields" data-dismiss="modal">Kapat</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    table tbody tr:hover {
+        background-color: orange;
+        cursor: pointer;
+    }
+
+    table tr.selected {
+        background-color: #e92929 !important;
+        color: #fff;
+        vertical-align: middle;
+        padding: 1.5em;
+    }
+</style>
+
+
+@section scripts{
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">   
+   
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(document).ready(function () {
+
+                $(function () {
+                    $('input[name="VisitDate"]').datepicker();
+                });
+
+
+
+            $('table tbody tr').click(function () {
+                $('.selected').removeClass('selected');
+                $(this).addClass("selected");
+
+                var currentRow = $(this).closest("tr");
+
+                var visitId = currentRow.find("td:eq(0)").text();
+                $("#hdnVisitId").val(visitId);
+
+                $.ajax({
+                    url: "/Home/GetVisitingDetail",
+                    dataType: 'json',
+                    type: 'GET',
+                    data: { Id: visitId },
+                }).done(function (result) {
+                    if (result) {
+                        $('input[name="VisitDate"]').val(result.visitDate);
+                        $('input[name="Description"]').val(result.description);
+
+                        if (result.notifyByEmail) {
+                            $('input[name="NotifyByEmail"]').prop('checked', true);
+                        }
+
+                        $("#visitModal").modal('show');
+                    }
+
+                });//Ajax method
+
+            });
+
+            $(".clearFields").click(function () {
+                window.location.reload();
+            });
+
+            $("#btnNewVisit").click(function () {
+                $('input[name="VisitDate"]').val("");
+                $('input[name="Description"]').val("");
+                $('input[name="NotifyByEmail"]').prop('checked', false);
+
+            });
+
+            $("#btnAddVisit").click(function () {
+
+                var visitObj = {
+                    Id: $("#hdnVisitId").val(),
+                    VisitDate: $('input[name="VisitDate"]').val(),
+                    Description: $('input[name="Description"]').val(),
+                    NotifyByEmail: $('input[name="NotifyByEmail"]').is(":checked"),
+                    CustomerId:@ViewData["custId"]
+                };
+
+                $.ajax({
+                    url: "/Home/AddVisiting",
+                    dataType: 'json',
+                    type: 'POST',
+                    data: { Visiting: visitObj },
+                }).done(function (result) {
+                    if (result) {
+                        alert("Kayıt Eklendi");
+                        window.location.reload();
+                    }
+                    else {
+                        alert("Kayıt eklenemedi");
+                    }
+                });//Ajax method
+            });
+
+            $("#btnDeleteVisit").click(function () {
+                $.ajax({
+                    url: "/Home/DeleteVisiting",
+                    dataType: 'json',
+                    type: 'POST',
+                    data: { Id: $("#hdnVisitId").val() },
+                }).done(function (result) {
+                    if (result) {
+                        alert("Kayıt Silindi");
+                        window.location.reload();
+                    }
+                    else {
+                        alert("Kayıt silinemedi");
+                    }
+                });//Ajax method
+            });//btnDelete
+
+        });//document ready
+    </script>
+}

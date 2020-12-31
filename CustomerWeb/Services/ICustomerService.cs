@@ -14,5 +14,10 @@ namespace CustomerWeb.Services
         Task<int> AddCustomer(Customer Customer);
         Task<int> UpdateCustomer(Customer Customer);
         Task<int> DeleteCustomer(int Id);
+        Task<int> AddVisit(Visiting Visiting);
+        Task<int> UpdateVisit(Visiting Visiting);
+        Task<List<Visiting>> GetVisitDetail(int Id);
+        Task<List<Visiting>> GetVisitList(int CustomerId);
+         Task<int> DeleteVisit(int Id);
     }
 }

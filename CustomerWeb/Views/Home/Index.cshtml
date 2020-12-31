@@ -6,7 +6,7 @@
 <div class="container">
     <div class="btn-group">
         <a asp-controller="Home" asp-action="CustomerDesc" type="button" class="btn btn-primary">
-            Yeni Kayıt
+           Yeni Kayıt
         </a>
         <button type="button" class="btn btn-primary" id="btnOpen">Aç</button>
         <button type="button" class="btn btn-primary" id="btnDelete">Sil</button>
@@ -16,7 +16,7 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>No</th>
+                    <th>#</th>
                     <th>Adı</th>
                     <th>Vergi Numarası</th>
                     <th>Kuruluş Tarihi</th>
@@ -68,7 +68,6 @@
                 var col1 = currentRow.find("td:eq(0)").text();
               
                 $("#custId").val(col1);
-
             });
 
             $("#btnOpen").click(function () {
@@ -78,8 +77,7 @@
                 }
                 else {
                     alert("Lütfen Seçim yapın"); 
-                }
-              
+                }              
             });
 
             $("#btnDelete").click(function () {
@@ -95,8 +93,7 @@
                     }
                     else {
                         alert("Kayıt silinemedi");
-                    }
-                        1
+                    }                        
                 });//Ajax method                
 
             });
