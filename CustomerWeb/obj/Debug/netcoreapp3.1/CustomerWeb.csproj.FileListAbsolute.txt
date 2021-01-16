@@ -381,3 +381,4 @@ C:\Users\Ahmet Bilgiç\source\repos\CustomerWeb\CustomerWeb\bin\Debug\netcoreapp
 C:\Users\Ahmet Bilgiç\source\repos\CustomerWeb\CustomerWeb\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.CSharp.resources.dll
 C:\Users\Ahmet Bilgiç\source\repos\CustomerWeb\CustomerWeb\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.CSharp.resources.dll
 C:\Users\Ahmet Bilgiç\source\repos\CustomerWeb\CustomerWeb\obj\Debug\netcoreapp3.1\CustomerWeb.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\Ahmet Bilgiç\source\repos\CustomerWeb\CustomerWeb\obj\Debug\netcoreapp3.1\CustomerWeb.csprojAssemblyReference.cache
